@@ -17,7 +17,7 @@ FUN_FACTS = [
 ]
 
 
-PHOTO_PATH = r"..\assets\Profile.PNG"  # Put a file in repo root or set a URL
+PHOTO_PATH = "Profile.PNG"  # File name inside streamlit_DSML/assets/
 
 
 def find_photo(filename=PHOTO_PATH):
