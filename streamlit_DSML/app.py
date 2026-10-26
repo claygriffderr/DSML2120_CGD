@@ -10,7 +10,7 @@ st.title(" Welcome to My Streamlit Site")
 st.markdown(
     """
     This is a two-page Streamlit app:
-    - **Bio**: who I am
+    - **Bio**: Clay Griffin-Derr
     - **Visualization**: a tiny interactive chart
 
     Use the left sidebar to switch pages.
