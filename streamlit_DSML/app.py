@@ -9,9 +9,10 @@ st.set_page_config(
 st.title(" Welcome to My Streamlit Site")
 st.markdown(
     """
-    This is a two-page Streamlit app:
+    This is a three-page Streamlit app:
     - **Bio**: Clay Griffin-Derr
     - **Visualization**: a tiny interactive chart
+    - **Pie**: a pie chart built from `data/pie_demo.csv`
 
     Use the left sidebar to switch pages.
     """
