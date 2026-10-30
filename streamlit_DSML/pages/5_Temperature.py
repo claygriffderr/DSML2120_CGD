@@ -1,9 +1,11 @@
 # AI use note:
 # Parts of this page were written with help from Claude Code, using the
-# Claude Opus 5.5 model (claude-opus-5-5), on 2026-10-29 around 6:48 PM MDT.
-# AI helped write the sample fallback data (SAMPLE_DF), the line chart, and
-# the code that saves each reading to data/weather_history.csv so the chart
-# shows historic data. I reviewed and tested the code myself.
+# Claude Opus 5.5 model (claude-opus-5-5), on 2026-10-29 between about
+# 6:48 PM and 7:10 PM MDT.
+# AI helped write the sample fallback data (SAMPLE_DF), the line chart, the
+# code that saves each reading to data/weather_history.csv so the chart
+# shows historic data, and the button that erases that saved history.
+# I reviewed and tested the code myself.
 
 import streamlit as st
 import pandas as pd
@@ -85,14 +87,21 @@ st.subheader("🔁 Auto Refresh Settings")
 refresh_sec = st.slider("Refresh every (sec)", 10, 120, 30)
 
 # Toggle to turn automatic refreshing on/off
-auto_refresh = st.toggle("Enable auto-refresh", value=False)
+auto_refresh = st.toggle("Enable auto-refresh", value=True)
 
 # Show current refresh time
 st.caption(f"Last refreshed at: {time.strftime('%H:%M:%S')}")
 
 
 st.subheader("Temperature history")
+
+# Erase all saved readings; the history starts over from the next reading
+if st.button("🗑️ Erase historic data"):
+    HISTORY_PATH.unlink(missing_ok=True)
+    st.success("Historic data erased. Starting a new history.")
+
 df, err = get_weather()
+saved_count = len(df)
 
 if err:
     st.warning(err)
@@ -106,7 +115,7 @@ fig = px.line(df, x="time", y="temperature", markers=True,
               title="Temperature in Denver, CO over time",
               labels={"time": "Time", "temperature": "Temperature (°C)"})
 st.plotly_chart(fig, use_container_width=True)
-st.caption(f"{len(df)} readings saved in data/weather_history.csv")
+st.caption(f"{saved_count} readings saved in data/weather_history.csv")
 
 # If auto-refresh is ON, wait and rerun the app
 if auto_refresh:
